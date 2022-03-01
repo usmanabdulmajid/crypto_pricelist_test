@@ -14,12 +14,11 @@ class CoinCubit extends Cubit<CoinState> {
   Future<void> loadCoins() async {
     try {
       final result = await coinRepository.coins();
-      debugPrint('bankai ${result[0].name}');
       emit(CoinLoaded(result));
     } on InvalidUriFormat {
-      debugPrint('Uri format issue');
+      debugPrint('invalid uri');
     } on NetworkException {
-      debugPrint('network');
+      debugPrint('no network connection');
     } catch (e) {
       debugPrint(e.toString());
     }

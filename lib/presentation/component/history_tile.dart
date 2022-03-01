@@ -29,7 +29,7 @@ class HistoryTile extends StatelessWidget {
         children: [
           Container(
             width: context.screenWidth(0.23),
-            height: context.screenHeight(0.15),
+            height: 110,
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
               color: AppColor.white,
@@ -42,7 +42,7 @@ class HistoryTile extends StatelessWidget {
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 15),
-              height: context.screenHeight(0.15),
+              height: 110,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
