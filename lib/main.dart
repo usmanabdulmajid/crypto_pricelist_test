@@ -1,4 +1,13 @@
+import 'package:crypto_pricelist_test/core/api_client.dart';
+import 'package:crypto_pricelist_test/core/constants/app_color.dart';
+import 'package:crypto_pricelist_test/cubit/coin_cubit.dart';
+import 'package:crypto_pricelist_test/repository/coin_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
+
+import 'presentation/screen/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,59 +19,27 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+    return BlocProvider<CoinCubit>(
+      create: (context) => CoinCubit(CoinRepository(ApiClient(Client()))),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Crypto pricelist test',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
+        builder: (context, child) {
+          return AnnotatedRegion<SystemUiOverlayStyle>(
+            child: child!,
+            value: const SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.dark,
+              systemNavigationBarColor: AppColor.white,
+              systemNavigationBarIconBrightness: Brightness.dark,
+            ),
+          );
+        },
+        home: const HomeScreen(),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
